@@ -10,4 +10,5 @@ class Meta extends Model
     use SoftDeletes;
 
     protected $table = 'zeus_meta';
+    protected $fillable = ['meta_group', 'meta_key', 'meta_value'];
 }

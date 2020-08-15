@@ -3,6 +3,7 @@
 namespace Zeus\Libraries;
 use Zeus\Libraries\ZeusConfig;
 use Zeus\Libraries\ZeusSecurity;
+use Zeus\Libraries\ZeusUserGroup;
 use Zeus\App\Models\User;
 use Session;
 
@@ -400,5 +401,7 @@ class ZeusUser
             );
         }
     }
+
+    
 
 }

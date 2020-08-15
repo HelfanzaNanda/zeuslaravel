@@ -87,6 +87,38 @@ class ZeusConfig
         }
     }
 
+    public function logo()
+    {
+        $config = new ZeusConfig();
+        $path = $config->config_read('general', 'upload_path') . '/app/thumbs/200/';
+        $url = $config->config_read('general', 'upload_url') . '/app/thumbs/200/';
+        $default = $config->config_read('general', 'logo');
+        $image = $this->meta_global_read('system','logo');
+        $file_path = $path . $image;
+        $file_url = $url . $image;
+        if (file_exists($file_path) && is_file($file_path)) {
+            $default = $file_url;
+        }
+
+        return $default;
+    }
+
+    public function favicon()
+    {
+        $config = new ZeusConfig();
+        $path = $config->config_read('general', 'upload_path') . '/app/thumbs/200/';
+        $url = $config->config_read('general', 'upload_url') . '/app/thumbs/200/';
+        $default = $config->config_read('general', 'logo');
+        $image = $this->meta_global_read('system', 'favicon');
+        $file_path = $path . $image;
+        $file_url = $url . $image;
+        if (file_exists($file_path) && is_file($file_path)) {
+            $default = $file_url;
+        }
+
+        return $default;
+    }
+
     public function meta_user_update(Int $user_id, String $group,String $key, String $value)
     {
         $update = Meta::whereRaw("LOWER(meta_key) = ?", [strtolower($key)])
