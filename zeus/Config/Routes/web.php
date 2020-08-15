@@ -19,6 +19,8 @@ Route::group(['middleware' => 'zeus.auth'], function () {
                 route::post('/store', 'User\GroupController@store')->name('core.user.group.store');
                 route::get('/delete/{id}', 'User\GroupController@delete')->name('core.user.group.delete');
                 route::get('/access/{id}', 'User\GroupController@access')->name('core.user.group.access');
+                route::get('/show_modules', 'User\GroupController@show_modules')->name('core.user.group.show_modules');
+                route::post('/save_access', 'User\GroupController@save_access')->name('core.user.group.save_access');
             });
             Route::prefix('master')->group(function () {
                 route::get('/', 'User\MasterController@index')->name('core.user.master');
@@ -31,8 +33,11 @@ Route::group(['middleware' => 'zeus.auth'], function () {
             });
         });
         Route::prefix('config')->group(function () {
-            route::get('general/{segment}', 'Config\GeneralController@index')->name('core.config.general');
-            Route::get('logo', 'Config\LogoController@index')->name('core.config.logo');
+            route::get('application', 'ConfigController@application')->name('core.config.application');
+            route::post('app/update', 'ConfigController@app_update')->name('core.config.app_update');
+            route::post('logo/update', 'ConfigController@logo_update')->name('core.config.logo_update');
+            route::get('company', 'ConfigController@company')->name('core.config.company');
+            route::post('company/update', 'ConfigController@company_update')->name('core.config.company_update');
         });
     });
 });
