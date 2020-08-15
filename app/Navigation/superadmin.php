@@ -26,17 +26,11 @@ $menu_config = [
         'child' => [
             'Application' => [
                 'icon' => 'far fa-circle',
-                'route' => 'core.config.general',
-                'params'=>['segment'=>'application']
+                'route' => 'core.config.application'
             ],
             'Company' => [
                 'icon' => 'far fa-circle',
-                'route' => 'core.config.general',
-                'params' => ['segment' => 'company']
-            ],
-            'Logo & Favicon' => [
-                'icon' => 'far fa-circle',
-                'route' => 'core.config.logo'
+                'route' => 'core.config.company'
             ]
         ]
     ]
