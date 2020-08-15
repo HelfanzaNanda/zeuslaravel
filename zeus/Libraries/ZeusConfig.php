@@ -90,8 +90,8 @@ class ZeusConfig
     public function logo()
     {
         $config = new ZeusConfig();
-        $path = $config->config_read('general', 'upload_path') . '/app/thumbs/200/';
-        $url = $config->config_read('general', 'upload_url') . '/app/thumbs/200/';
+        $path = $config->config_read('general', 'upload_path') . '/app/';
+        $url = $config->config_read('general', 'upload_url') . '/app/';
         $default = $config->config_read('general', 'logo');
         $image = $this->meta_global_read('system','logo');
         $file_path = $path . $image;
@@ -106,8 +106,8 @@ class ZeusConfig
     public function favicon()
     {
         $config = new ZeusConfig();
-        $path = $config->config_read('general', 'upload_path') . '/app/thumbs/200/';
-        $url = $config->config_read('general', 'upload_url') . '/app/thumbs/200/';
+        $path = $config->config_read('general', 'upload_path') . '/app/';
+        $url = $config->config_read('general', 'upload_url') . '/app/';
         $default = $config->config_read('general', 'logo');
         $image = $this->meta_global_read('system', 'favicon');
         $file_path = $path . $image;

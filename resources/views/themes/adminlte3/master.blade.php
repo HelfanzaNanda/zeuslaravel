@@ -51,8 +51,9 @@ $theme_url=url('assets/themes/adminlte3/').'/';
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="{{ route('core.account.dashboard') }}" class="brand-link">
-                <img src="{{ zeus_logo() }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">{{ meta_read('app_name') }}</span>
+                <img src="{{ zeus_favicon() }}" alt="AdminLTE Docs Logo Small" class="brand-image-xl logo-xs" style="width:90%">
+                <img src="{{ zeus_logo(800) }}" class="brand-image-xl logo-xl" style="width:90%">
+                <span class="brand-text font-weight-light">&nbsp;</span>
             </a>
 
             <!-- Sidebar -->
