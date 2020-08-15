@@ -20,6 +20,22 @@ if (!function_exists('config_read'))
     }
 }
 
+if (!function_exists('zeus_logo')) {
+    function zeus_logo()
+    {
+        $meta = new ZeusConfig();
+        return $meta->logo();
+    }
+}
+
+if (!function_exists('zeus_favicon')) {
+    function zeus_favicon()
+    {
+        $meta = new ZeusConfig();
+        return $meta->favicon();
+    }
+}
+
 if (!function_exists('user_info')) 
 {
     function user_info($key="id")
