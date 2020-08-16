@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+//Middleware Zeus Auth
+Route::group(['middleware' => 'zeus.auth'], function () {
+    // Include your route with session
+});

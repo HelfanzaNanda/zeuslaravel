@@ -407,6 +407,27 @@ class ZeusUser
         }
     }
 
-    
+    public function check_access_route($route_name)
+    {
+        $user_group_id = user_info('user_group_id');
+        $zeus_group = new ZeusUserGroup();
+        $info = $zeus_group->group_info($user_group_id);
+        $next=false;
+        if($info->meta_key == 'superadmin')
+        {
+            $next=true;
+        }else{
+            $route_name_access = $zeus_group->zeus_user_group_access($info->meta_key);
+            if(!empty($route_name_access))
+            {
+                if (isset($route_name_access[$route_name])) {
+                    if ($route_name_access[$route_name] == 'on') {
+                        $next = true;
+                    }
+                }
+            }
+        }
+        return $next;
+    }
 
 }

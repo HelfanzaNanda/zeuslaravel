@@ -19,7 +19,13 @@ class CheckAuth
     {
         $auth = new ZeusUser();
         if ($auth->has_login()) {
-            return $next($request);
+            $route_name = $request->route()->getName();
+            if($auth->check_access_route($route_name))
+            {
+                return $next($request);
+            }else{
+                return redirect()->route('dashboard')->with('error', 'Not Authentication');
+            }
         } else {
             return redirect()->route('login')->with('error', 'You must login first!');
         }
