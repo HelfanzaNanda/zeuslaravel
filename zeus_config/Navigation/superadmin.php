@@ -36,8 +36,22 @@ $menu_config = [
     ]
 ];
 
+$menu_tools = [
+    'Tools' => [
+        's1' => 'core',
+        's2' => 'tools',
+        'icon' => 'fa fa-star',
+        'child' => [
+            'Send Email' => [
+                'icon' => 'far fa-circle',
+                'route' => 'core.tools.send_email'
+            ],
+        ]
+    ]
+];
 
-return array_merge($menu_admin, $menu_config);
+
+return array_merge($menu_admin, $menu_config,$menu_tools);
 
 /*
 Jika menu sama dengan role akses lainnya, pada role navigation file tambahkan

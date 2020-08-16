@@ -39,5 +39,11 @@ Route::group(['middleware' => 'zeus.auth'], function () {
             route::get('company', 'ConfigController@company')->name('core.config.company');
             route::post('company/update', 'ConfigController@company_update')->name('core.config.company_update');
         });
+        Route::prefix('tools')->group(function () {
+            Route::prefix('send_email')->group(function () {
+                route::get('/', 'Tools\SendEmailController@index')->name('core.tools.send_email');
+                route::post('/send_email_do', 'Tools\SendEmailController@send_email_do')->name('core.tools.send_email.do');
+            });
+        });
     });
 });
