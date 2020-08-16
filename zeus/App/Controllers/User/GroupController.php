@@ -98,39 +98,44 @@ class GroupController extends ZeusController
             // dd($route_name_access);
             foreach ($routeCollection as $route) {
                 $uri = $route->uri();
+                $middleware = $route->action['middleware'];
+
+                // if(isset($middleware[1]))
                 $explode = explode("/", $uri);
                 if (!in_array($explode[0], $not_allowed)) {
-                    $route_name = $route->action['as'];
-                    $route_prefix = $route->action['prefix'];
-                    $route_action = $route->action['controller'];
-                    $explode_function = explode("@", $route_action);
+                    if (isset($middleware[1])) {
+                        if ($middleware[1] == 'zeus.auth') {
+                            $route_name = $route->action['as'];
+                            $route_prefix = $route->action['prefix'];
+                            $route_action = $route->action['controller'];
+                            $explode_function = explode("@", $route_action);
 
-                    $module_label = ucwords($uri);
-                    if (!empty($route_prefix)) {
-                        $module_label = str_replace("/", " ", $route_prefix);
-                        $module_label = ucwords($module_label);
-                    }
-                    $access=0;
-                    if(isset($route_name_access[$route_name]))
-                    {
-                        if($route_name_access[$route_name] == 'on')
-                        {
-                            $access=1;
+                            $module_label = ucwords($uri);
+                            if (!empty($route_prefix)) {
+                                $module_label = str_replace("/", " ", $route_prefix);
+                                $module_label = ucwords($module_label);
+                            }
+                            $access = 0;
+                            if (isset($route_name_access[$route_name])) {
+                                if ($route_name_access[$route_name] == 'on') {
+                                    $access = 1;
+                                }
+                            }
+                            $route_includes->push([
+                                'label' => $module_label,
+                                'function' => $explode_function[1],
+                                'uri' => $uri,
+                                'name' => $route_name,
+                                'prefix' => $route_prefix,
+                                'controller' => $route_action,
+                                'access' => $access
+                            ]);
                         }
                     }
-                    $route_includes->push([
-                        'label' => $module_label,
-                        'function' => $explode_function[1],
-                        'uri' => $uri,
-                        'name' => $route_name,
-                        'prefix' => $route_prefix,
-                        'controller' => $route_action,
-                        'access'=> $access
-                    ]);
                 }
             }
             $with_prefix = $route_includes->groupBy('prefix');
-            $array_modules=$with_prefix->toArray();
+            $array_modules = $with_prefix->toArray();
             
             $view=view('zeus::user.group.access_data',compact('array_modules', 'user_group_id'));
             echo $view->render();
