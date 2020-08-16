@@ -1,5 +1,5 @@
 <?php
-$path = base_path('app/Navigation/' . user_role_name() . '.php');
+$path = base_path('zeus_config/Navigation/' . user_role_name() . '.php');
 $navFile = array();
 if (file_exists($path)) {
     $navFile = include($path);
