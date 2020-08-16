@@ -69,6 +69,7 @@
     </div>
 </div>
 
+@section('bottom')
 <script>
     $(document).ready(function() {
 
@@ -162,3 +163,4 @@
 
     });
 </script>
+@endsection

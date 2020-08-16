@@ -1,3 +1,4 @@
+@if(!empty($array_modules))
 <div class="row">
     <div class="col-sm-8">
         <a href="javascript:;" onclick="show_modules();" class="btn btn-default"><i class="fa fa-search"></i> Refresh Module</a>
@@ -8,12 +9,13 @@
     </div>
 </div>
 <p>
-    @if(!empty($array_modules))
+
     <div class="checkbox">
         <label>
             <input type="checkbox" id="select_all_modules" /> Select All Modules
         </label>
-    </div><hr/>
+    </div>
+    <hr />
     <form method="post" id="frmupdate">
         @csrf
         <input type="hidden" name="id" value="{{ $user_group_id}}" />
@@ -75,8 +77,11 @@
         </div>
         <button type="submit" class="btn btn-primary">Save Access</button>
     </form>
-    @endif
+
 </p>
+@else
+    Opps!! no apps route here. Please add before
+@endif
 
 <script>
     $(document).ready(function() {

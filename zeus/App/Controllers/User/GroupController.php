@@ -13,7 +13,7 @@ use Route;
 
 class GroupController extends ZeusController
 {
-
+    private $protect_route= array('login', 'core', '_ignition', '', 'api', '_debugbar');
     public function index()
     {
         $group=new ZeusUserGroup();
@@ -90,7 +90,7 @@ class GroupController extends ZeusController
             $user_group_id=$request->group;
             $info = $zeus_group->group_info($user_group_id);
             $user_group_name=$info->meta_key;
-            $not_allowed = array('login', 'core', '_ignition', '', 'api');
+            $not_allowed = $this->protect_route;
             $routeCollection = Route::getRoutes();
             $route_includes = collect();
             

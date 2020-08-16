@@ -171,6 +171,11 @@ class ZeusUser
             );
             Session::put($session_name, $arr_session);
 
+            $edit=User::find($user_info->id);
+            $edit->last_login       = date("Y-m-d H:i:s");
+            $edit->token            = md5(sha1(time().rand(1,100).$user_info->id));
+            $edit->save();
+
             return [
                 'status'=>true,
                 'message'=>'Login Valid'

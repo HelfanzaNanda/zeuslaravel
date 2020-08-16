@@ -20,7 +20,7 @@ $theme_url=url('assets/themes/adminlte3/').'/';
     <!-- <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"> -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <!-- jQuery -->
-    <script src="{{ $theme_url }}plugins/jquery/jquery.min.js"></script>
+
     @include('zeus::layout.header')
 </head>
 
@@ -200,7 +200,7 @@ $theme_url=url('assets/themes/adminlte3/').'/';
     <!-- ./wrapper -->
 
     <!-- REQUIRED SCRIPTS -->
-
+    <script src="{{ $theme_url }}plugins/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap 4 -->
     <script src="{{ $theme_url }}plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

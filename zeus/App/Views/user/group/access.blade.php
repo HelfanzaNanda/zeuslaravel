@@ -26,7 +26,7 @@
     </div>
 </div>
 
-
+@push('assets')
 <script>
     $(document).ready(function() {
 
@@ -58,3 +58,4 @@
 
     }
 </script>
+@endpush
