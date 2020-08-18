@@ -8,6 +8,17 @@
         "laravel",
         "starter-kit"
     ],
+    "authors": [
+        {
+            "name": "Laravel",
+            "homepage": "https://github.com/laravel"
+        },
+        {
+            "name": "Heru Rahmat",
+            "email": "eyubalzary@gmail.com",
+            "homepage": "https://github.com/herurahmat"
+        }
+    ],
     "license": "MIT",
     "require": {
         "php": "^7.2",
