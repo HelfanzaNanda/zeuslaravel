@@ -4,6 +4,7 @@ namespace Zeus\Libraries;
 use Zeus\Libraries\ZeusConfig;
 use Zeus\Libraries\ZeusSecurity;
 use Zeus\Libraries\ZeusUserGroup;
+use Zeus\Libraries\ZeusMessage;
 use Zeus\App\Models\User;
 use Session;
 
@@ -428,6 +429,122 @@ class ZeusUser
             }
         }
         return $next;
+    }
+
+    public function forgot_password($email)
+    {
+        $check_email=User::where('email',$email)->first();
+        if(empty($check_email->id))
+        {
+            return array(
+                'status'=>false,
+                'message'=>'Email not exists'
+            );
+        }else{
+            $expired = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") . " +120 minutes"));
+            $token=md5(sha1($email));
+            $edit=User::find($check_email->id);
+            $edit->forgot_token=$token;
+            $edit->forgot_valid = $expired;
+            $edit->save();
+            $url=url('/forgot/'.$token);
+            $subject="New Password";
+            $message="Your verification email is ".$url.". Valid until ".$expired;
+            $lib=new ZeusMessage();
+            $action=$lib->send_email($email, $subject, $message, 'default');
+            if($action['code']== 200)
+            {
+                return array(
+                    'status' => true,
+                    'message' => 'Your verification email has been sent. Please check your inbox or spam'
+                );
+            }else{
+                return array(
+                    'status' => false,
+                    'message' => $action['message']
+                );
+            }
+        }
+    }
+
+    public function forgot_token_validate($token)
+    {
+        $now=date('Y-m-d H:i:s');
+        $now_int=strtotime($now);
+        $check=User::where('forgot_token',$token)->first();
+        if(empty($check))
+        {
+            Session::forget('change_password');
+            return array(
+                'status'=>false,
+                'message'=>'Token invalid!!'
+            );
+        }
+
+        $expired=$check->forgot_valid;
+        $expired_int=strtotime($expired);
+        if($now_int > $expired_int)
+        {
+            Session::forget('change_password');
+            $edit=User::find($check->id);
+            $edit->forgot_token = NULL;
+            $edit->forgot_valid = NULL;
+            $edit->save();
+            return array(
+                'status' => false,
+                'message' => 'Token expired!!'
+            );
+        }
+        $data=array(
+            'user_id'=>$check->id,
+            'email'=>$check->email,
+            'token'=>$token
+        );
+        Session::put('change_password',$data);
+        return array(
+            'status' => true,
+            'message' => 'Token Valid'
+        );
+    }
+
+    public function update_password_forgot($password_new)
+    {
+        if (Session::get('change_password')) {            
+            $check_token = $this->forgot_token_validate(Session::get('change_password')['token']);
+            if ($check_token['status'] == true) {
+                $secure = new ZeusSecurity();
+                $user_id= Session::get('change_password')['user_id'];
+                $edit=User::find($user_id);
+                $edit->forgot_token = NULL;
+                $edit->forgot_valid = NULL;
+                $edit->password = $secure->password_hash($password_new);
+                $save=$edit->save();
+                if($save)
+                {
+                    Session::forget('change_password');
+                    return array(
+                        'status'=>true,
+                        'message'=>'Successfully saved password. Try login!!'
+                    );    
+                }else{
+                    return array(
+                        'status' => false,
+                        'message' => 'Failed save password'
+                    );    
+                }
+            } else {
+                return array(
+                    'status'=>false,
+                    'message'=>$check_token['message']
+                );
+            }
+        } else {
+            return array(
+                'status' => false,
+                'message' => 'Not authentication'
+            );
+        }
+        
     }
 
 }

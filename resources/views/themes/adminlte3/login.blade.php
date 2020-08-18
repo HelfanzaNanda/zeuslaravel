@@ -53,12 +53,7 @@ $theme_url=url('assets/themes/adminlte3/').'/';
                     </div>
                     <div class="row">
                         <div class="col-8">
-                            <div class="icheck-primary">
-                                <input type="checkbox" id="remember">
-                                <label for="remember">
-                                    Remember Me
-                                </label>
-                            </div>
+                            <a href="javascript:;" onclick="show_forgot_password();">Forgot Password</a>
                         </div>
                         <!-- /.col -->
                         <div class="col-4">
@@ -80,7 +75,50 @@ $theme_url=url('assets/themes/adminlte3/').'/';
         </div>
     </div>
     <!-- /.login-box -->
+    <div class="modal" tabindex="-1" role="dialog" id="modal_forgot_password" data-backdrop='static'>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Forgot Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="post" id="frmforgot">
+                                @csrf
+                                <div class="input-group mb-3">
+                                    <input type="email" class="form-control" placeholder="Email" name="email" required value="">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-envelope"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        &nbsp;
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-8">
+                                        <button type="submit" class="btn btn-primary">Send Verication Link</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                            </form>
+                        </div>
+                        <div class="overlay" style="display: none;">
+                            <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                        </div>
+                    </div>
 
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- jQuery -->
     <script src="{{ $theme_url }}plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
@@ -117,7 +155,40 @@ $theme_url=url('assets/themes/adminlte3/').'/';
                     });
             });
 
+            $("#frmforgot").on('submit', function(e) {
+                e.preventDefault();
+                $.ajax({
+                        url: "{{ route('login.send_verification') }}",
+                        data: $(this).serialize(),
+                        type: "post",
+                        dataType: "json",
+                        beforeSend: function() {
+                            $(".overlay").show();
+                        },
+                    })
+                    .done(function(x) {
+                        if (x.status == true) {
+                            alert(x.message)
+                            location.reload();
+                        } else {
+                            alert(x.message)
+                        }
+                        $(".overlay").hide();
+                    })
+                    .fail(function() {
+                        alert('Server not respond');
+                        $(".overlay").hide();
+                    })
+                    .always(function() {
+
+                    });
+            });
+
         });
+
+        function show_forgot_password() {
+            $("#modal_forgot_password").modal('show');
+        }
     </script>
 </body>
 

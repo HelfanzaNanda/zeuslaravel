@@ -45,7 +45,7 @@ $menu_tools = [
             'Send Email' => [
                 'icon' => 'far fa-circle',
                 'route' => 'core.tools.send_email'
-            ],
+            ]
         ]
     ]
 ];

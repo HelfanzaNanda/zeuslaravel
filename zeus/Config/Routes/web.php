@@ -3,6 +3,10 @@
 route::get('/', 'LoginController@index');
 route::get('/login', 'LoginController@index')->name('login');
 route::post('/login/do', 'LoginController@signin')->name('login.do');
+route::post('/login/send_verification', 'LoginController@send_verification')->name('login.send_verification');
+route::get('/forgot/{token}', 'LoginController@forgot_verified')->name('login.forgot.verified');
+route::get('/change_password', 'LoginController@change_password')->name('login.forgot.change_password');
+route::post('/update_password', 'LoginController@update_password')->name('login.forgot.update_password');
 
 Route::group(['middleware' => 'zeus.auth'], function () {
     Route::prefix('core')->group(function () {
