@@ -2,11 +2,11 @@
     "name": "isysedge/zeus",
     "type": "project",
     "version": "1.0.0",
-    "description": "Laravel Skeleton ISYS Project",
+    "description": "Laravel Starter Kit",
     "keywords": [
         "framework",
         "laravel",
-        "skeleton"
+        "starter-kit"
     ],
     "license": "MIT",
     "require": {
@@ -63,6 +63,17 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "clear-all": [
+            "composer dumpautoload -o",
+            "@php artisan clear-compiled",
+            "@php artisan cache:clear",
+            "@php artisan route:clear",
+            "@php artisan view:clear",
+            "@php artisan config:clear"
+        ],
+        "migrate-all": [
+            "@php artisan migrate:generate -n"
         ]
     }
 }
