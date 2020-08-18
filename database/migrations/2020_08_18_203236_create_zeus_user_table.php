@@ -20,9 +20,12 @@ class CreateZeusUserTable extends Migration
             $table->string('email', 50)->index('email');
             $table->string('password');
             $table->integer('user_group_id')->index('user_group_id');
+            $table->string('token')->nullable();
             $table->boolean('status')->default(0);
             $table->string('avatar', 100)->nullable();
             $table->dateTime('last_login')->nullable();
+            $table->string('forgot_token', 50)->nullable();
+            $table->timestamp('forgot_valid')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
