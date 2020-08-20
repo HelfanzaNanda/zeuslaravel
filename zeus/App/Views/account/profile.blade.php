@@ -69,7 +69,7 @@
     </div>
 </div>
 
-@section('bottom')
+@push('assets')
 <script>
     $(document).ready(function() {
 
@@ -163,4 +163,4 @@
 
     });
 </script>
-@endsection
+@endpush
