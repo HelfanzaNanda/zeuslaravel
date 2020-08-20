@@ -1,6 +1,7 @@
 <?php
 use Zeus\Libraries\ZeusConfig;
 use Zeus\Libraries\ZeusUser;
+use Zeus\Libraries\ZeusSecurity;
 
 if(!function_exists('meta_read'))
 {
@@ -126,5 +127,13 @@ if (!function_exists('app_copyright')) {
         }
 
         return $string;
+    }
+}
+
+if (!function_exists('xss_clean')) {
+    function xss_clean($str, $is_image = FALSE)
+    {
+        $security=new ZeusSecurity();
+        return $security->xss_clean($str,$is_image);
     }
 }
