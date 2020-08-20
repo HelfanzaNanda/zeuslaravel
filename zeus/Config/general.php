@@ -1,5 +1,5 @@
 <?php
-
+$config['zeus_version']= '1.0.0';
 $config['admin_template']='adminlte3';
 $config['session_name'] = 'zeusisys';
 $config['asset_url']=asset('/');
