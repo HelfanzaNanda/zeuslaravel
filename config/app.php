@@ -178,9 +178,7 @@ return [
         
         Zeus\Provider\ZeusServiceProvider::class,
         Zeus\Provider\ZeusHelperServiceProvider::class,
-        Zeus\Provider\ZeusRouteServiceProvider::class,
-
-        Intervention\Image\ImageServiceProvider::class
+        Zeus\Provider\ZeusRouteServiceProvider::class
 
     ],
 
@@ -231,8 +229,7 @@ return [
         'Str' => Illuminate\Support\Str::class,
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
-        'View' => Illuminate\Support\Facades\View::class,
-        'Image' => Intervention\Image\Facades\Image::class
+        'View' => Illuminate\Support\Facades\View::class
 
     ],
 
