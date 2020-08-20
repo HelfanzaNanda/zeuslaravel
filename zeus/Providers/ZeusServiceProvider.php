@@ -15,5 +15,6 @@ class ZeusServiceProvider extends ServiceProvider
     public function boot()
     {
         \View::addNamespace('zeus', base_path('zeus/App/Views'));
+        \View::addNamespace('zeus_dashboard', base_path('zeus_config/Dashboard'));
     }
 }
