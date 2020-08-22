@@ -12,8 +12,13 @@ class DashboardController extends ZeusController
 
     public function index()
     {
-        $role= user_role_name();
-        $role_value= user_role_value();
-        return zeus_view('zeus_dashboard::'.$role, ['title' => 'Dashboard '. $role_value]);
+        $role = user_role_name();
+        $role_value = user_role_value();
+        if(view()->exists("zeus_dashboard::".$role))
+        {
+            return zeus_view('zeus_dashboard::' . $role, ['title' => 'Dashboard ' . $role_value]);
+        }else{
+            return zeus_view('');
+        }
     }
 }
