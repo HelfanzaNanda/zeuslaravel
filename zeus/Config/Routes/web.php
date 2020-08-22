@@ -15,7 +15,7 @@ Route::group(['middleware' => 'zeus.auth'], function () {
             Route::get('profile', 'Account\ProfileController@index')->name('core.account.profile');
             Route::post('profile/update', 'Account\ProfileController@profile_update')->name('core.account.profile.update');
             Route::post('avatar/update', 'Account\ProfileController@avatar_update')->name('core.account.avatar.update');
-            Route::get('signout', 'Account\SignOutController@index')->name('core.account.signout');
+            Route::get('core/account/signout', 'Account\SignOutController@index')->name('core.account.signout');
         });
         Route::prefix('user')->group(function () {
             Route::prefix('group')->group(function () {
@@ -47,6 +47,16 @@ Route::group(['middleware' => 'zeus.auth'], function () {
             Route::prefix('send_email')->group(function () {
                 route::get('/', 'Tools\SendEmailController@index')->name('core.tools.send_email');
                 route::post('/send_email_do', 'Tools\SendEmailController@send_email_do')->name('core.tools.send_email.do');
+            });
+            Route::prefix('menu_builder')->group(function () {
+                route::get('/', 'Tools\MenuBuilderController@index')->name('core.tools.menu_builder');
+                route::post('/store', 'Tools\MenuBuilderController@store')->name('core.tools.menu_builder.store');
+                route::get('/menu_get', 'Tools\MenuBuilderController@menu_get')->name('core.tools.menu_builder.menu_get');
+                route::get('/menu_parent', 'Tools\MenuBuilderController@menu_parent')->name('core.tools.menu_builder.menu_parent');
+                route::get('/confirm_delete', 'Tools\MenuBuilderController@confirm_delete')->name('core.tools.menu_builder.confirm_delete');
+                route::post('/menu_delete', 'Tools\MenuBuilderController@menu_delete')->name('core.tools.menu_builder.menu_delete');
+                route::get('/confirm_edit', 'Tools\MenuBuilderController@confirm_edit')->name('core.tools.menu_builder.confirm_edit');
+                route::post('/menu_edit', 'Tools\MenuBuilderController@menu_edit')->name('core.tools.menu_builder.menu_edit');
             });
         });
     });
