@@ -1,9 +1,4 @@
 <?php
-$path = base_path('zeus_config/Navigation/' . user_role_name() . '.php');
-$navFile = array();
-if (file_exists($path)) {
-    $navFile = include($path);
-}
 function template_menu($menu)
 {
     $output = '';
@@ -65,4 +60,5 @@ function template_menu($menu)
     return $output;
 }
 
-echo template_menu($navFile);
+$navData= zeus_menu();
+echo template_menu($navData);

@@ -2,6 +2,7 @@
 use Zeus\Libraries\ZeusConfig;
 use Zeus\Libraries\ZeusUser;
 use Zeus\Libraries\ZeusSecurity;
+use Zeus\Libraries\ZeusMenu;
 
 if(!function_exists('meta_read'))
 {
@@ -135,5 +136,13 @@ if (!function_exists('xss_clean')) {
     {
         $security=new ZeusSecurity();
         return $security->xss_clean($str,$is_image);
+    }
+}
+
+if (!function_exists('zeus_menu')) {
+    function zeus_menu()
+    {
+        $menu = new ZeusMenu();
+        return $menu->zeus_group_array();
     }
 }
