@@ -418,15 +418,20 @@ class ZeusUser
         {
             $next=true;
         }else{
-            $route_name_access = $zeus_group->zeus_user_group_access($info->meta_key);
-            if(!empty($route_name_access))
-            {
-                if (isset($route_name_access[$route_name])) {
-                    if ($route_name_access[$route_name] == 'on') {
-                        $next = true;
+            $allowed_all=array('core.account.dashboard', 'core.account.profile', 'core.account.profile.update', 'core.account.avatar.update', 'core.account.signout');
+            if (in_array($route_name,$allowed_all)) {
+                $next = true;
+            }else{
+                $route_name_access = $zeus_group->zeus_user_group_access($info->meta_key);
+                if (!empty($route_name_access)) {
+                    if (isset($route_name_access[$route_name])) {
+                        if ($route_name_access[$route_name] == 'on') {
+                            $next = true;
+                        }
                     }
                 }
             }
+            
         }
         return $next;
     }

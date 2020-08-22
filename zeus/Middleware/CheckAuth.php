@@ -24,7 +24,7 @@ class CheckAuth
             {
                 return $next($request);
             }else{
-                return redirect()->route('dashboard')->with('error', 'Not Authentication');
+                return redirect()->route('core.account.dashboard')->with('error', 'Not Authentication');
             }
         } else {
             return redirect()->route('login')->with('error', 'You must login first!');
