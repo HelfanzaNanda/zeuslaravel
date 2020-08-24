@@ -73,7 +73,8 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-            "@php artisan key:generate --ansi"
+            "@php artisan key:generate --ansi",
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "clear-all": [
             "composer dumpautoload -o",
@@ -82,6 +83,11 @@
             "@php artisan route:clear",
             "@php artisan view:clear",
             "@php artisan config:clear"
+        ],
+        "setup-zeus": [
+            "@php artisan migrate",
+            "@php artisan db:seed",
+            "composer dumpautoload -o"
         ],
         "migrate-all": [
             "@php artisan migrate:generate -n"
