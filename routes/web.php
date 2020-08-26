@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('example','ExampleController@index');
 
 //Middleware Zeus Auth
 Route::group(['middleware' => 'zeus.auth'], function () {

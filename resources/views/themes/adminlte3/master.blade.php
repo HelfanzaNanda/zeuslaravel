@@ -128,8 +128,8 @@ $theme_url=url('assets/themes/adminlte3/').'/';
                         @if(!empty($header['breadcrumb']))
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                @foreach($breadcrumb as $breadcrumb_item)
-                                @if($breadcrumb_item->last())
+                                @foreach($header['breadcrumb'] as $breadcrumb_item)
+                                @if($loop->last)
                                 <li class="breadcrumb-item active"><a href="{{ $breadcrumb_item['link'] }}">{{ $breadcrumb_item['name'] }}</a></li>
                                 @else
                                 <li class="breadcrumb-item"><a href="{{ $breadcrumb_item['link'] }}">{{ $breadcrumb_item['name'] }}</a></li>
