@@ -161,3 +161,18 @@ if (!function_exists('date_calculate_diff')) {
         );
     }
 }
+
+if (!function_exists('date_days_two_date')) {
+    function date_days_two_date($from_date,$to_date,$format_date="Y-m-d")
+    {
+        $start = (new \DateTime($from_date))->modify('first day of this month');
+        $end = (new \DateTime($to_date))->modify('last day of this month');
+        $interval = \DateInterval::createFromDateString('1 days');
+        $period = new \DatePeriod($start, $interval, $end);
+        $output = [];
+        foreach ($period as $r) {
+            $output[] = $r->format($format_date);
+        }
+        return $output;
+    }
+}
