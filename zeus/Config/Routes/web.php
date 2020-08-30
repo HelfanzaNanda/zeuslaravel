@@ -57,6 +57,7 @@ Route::group(['middleware' => 'zeus.auth'], function () {
                 route::post('/menu_delete', 'Tools\MenuBuilderController@menu_delete')->name('core.tools.menu_builder.menu_delete');
                 route::get('/confirm_edit', 'Tools\MenuBuilderController@confirm_edit')->name('core.tools.menu_builder.confirm_edit');
                 route::post('/menu_edit', 'Tools\MenuBuilderController@menu_edit')->name('core.tools.menu_builder.menu_edit');
+                route::get('/reorder', 'Tools\MenuBuilderController@reorder')->name('core.tools.menu_builder.reorder');
             });
         });
     });

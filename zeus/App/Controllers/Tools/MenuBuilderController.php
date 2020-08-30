@@ -159,4 +159,12 @@ class MenuBuilderController extends ZeusController
             die('Not ajax request');
         }
     }
+
+    public function reorder(Request $request)
+    {
+        $data=$request->menuItem_;
+        $menu = new ZeusMenu();
+        $menu->reorder_menu($data);
+        return response()->json(['status'=>true]);
+    }
 }

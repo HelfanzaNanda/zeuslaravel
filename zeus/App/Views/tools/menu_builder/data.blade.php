@@ -1,6 +1,8 @@
 @if(!empty($data))
 <ol class="sortable">
     @foreach($data as $k=>$v)
+    @if(empty($v['child']))
+    <ol></ol>
     <li id="menuItem__{{ $v['menu_id'] }}" class="mjs-nestedSortable-branch mjs-nestedSortable-expanded">
         <div>
             <h4>
@@ -18,34 +20,53 @@
                     @endif
                 </div>
             </h4>
-
-            @if(!empty($v['child']))
-            <ol>
-                @foreach($v['child'] as $k2=>$v2)
-                <li id="menuItem__{{ $v2['menu_id'] }}" class="mjs-nestedSortable-branch mjs-nestedSortable-expanded">
-                    <div>
-                        <h4>
-                            <div class="menu-title">
-                                {{ $k2 }}
-                                @if($v2['is_admin'] == 0)
-                                <div class="menu-title-anchor">
-                                    <a href="javascript:;" onclick="show_edit(<?= $v2['menu_id']; ?>);" class="btn btn-default btn-xs btn-flat">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <a href="javascript:;" onclick="show_delete(<?= $v2['menu_id']; ?>);" class="btn btn-danger btn-xs btn-flat">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                </div>
-                                @endif
-                            </div>
-                        </h4>
-                    </div>
-                </li>
-                @endforeach
-            </ol>
-            @endif
         </div>
     </li>
+    @else
+
+    <li id="menuItem__{{ $v['menu_id'] }}" class="mjs-nestedSortable-branch mjs-nestedSortable-expanded">
+        <div>
+            <h4>
+                <div class="menu-title">
+                    {{ $k }}
+                    @if($v['is_admin'] == 0)
+                    <div class="menu-title-anchor">
+                        <a href="javascript:;" onclick="show_edit(<?= $v['menu_id']; ?>);" class="btn btn-default btn-xs btn-flat">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a href="javascript:;" onclick="show_delete(<?= $v['menu_id']; ?>);" class="btn btn-danger btn-xs btn-flat">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </div>
+                    @endif
+                </div>
+            </h4>
+        </div>
+        <ol>
+            @foreach($v['child'] as $k2=>$v2)
+            <li id="menuItem__{{ $v2['menu_id'] }}" class="mjs-nestedSortable-branch mjs-nestedSortable-expanded">
+                <div>
+                    <h4>
+                        <div class="menu-title">
+                            {{ $k2 }}
+                            @if($v2['is_admin'] == 0)
+                            <div class="menu-title-anchor">
+                                <a href="javascript:;" onclick="show_edit(<?= $v2['menu_id']; ?>);" class="btn btn-default btn-xs btn-flat">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a href="javascript:;" onclick="show_delete(<?= $v2['menu_id']; ?>);" class="btn btn-danger btn-xs btn-flat">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </div>
+                            @endif
+                        </div>
+                    </h4>
+                </div>
+            </li>
+            @endforeach
+        </ol>
+    </li>
+    @endif
     @endforeach
 </ol>
 @endif
@@ -88,7 +109,6 @@
             helper: 'clone',
             items: 'li',
             opacity: .6,
-            placeholder: 'mjs-placeholder',
             revert: 250,
             tabSize: 25,
             tolerance: 'pointer',
@@ -99,7 +119,16 @@
             startCollapsed: false,
             update: function() {
                 serialized = $('ol.sortable').nestedSortable('serialize');
-
+                console.log(serialized);
+                $.ajax({
+                    type: "get",
+                    dataType: "json",
+                    url: "{{ route('core.tools.menu_builder.reorder') }}",
+                    data: serialized,
+                    success: function(x) {
+                        show_menu();
+                    }
+                });
             }
         });
 
@@ -157,5 +186,9 @@
 
             });
 
+    }
+
+    function modal_edit_hide() {
+        $("#modaledit").modal('hide');
     }
 </script>

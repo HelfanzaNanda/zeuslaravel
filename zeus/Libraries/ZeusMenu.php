@@ -6,6 +6,7 @@ use Zeus\App\Models\Menu;
 use Zeus\App\Models\MenuGroup;
 use Zeus\Libraries\ZeusUserGroup;
 use DB;
+use Route;
 
 class ZeusMenu
 {
@@ -105,13 +106,21 @@ class ZeusMenu
             }else{
                 if(!empty($item['zeus_menu_id']) && $item['zeus_menu_id']== $menu_parent)
                 {
+                    $route='core.account.dashboard';
+                    if(!empty($item['route_name']))
+                    {
+                        if(Route::has($item['route_name']))
+                        {
+                            $route=$item['route_name'];
+                        }
+                    }
                     $output[$item['title']] = [
                         'menu_id' => $item['id'],
                         'can_edit' => $item['can_edit'],
                         'can_delete' => $item['can_delete'],
                         'is_admin' => $item['is_admin'],
                         'icon' => $item['icon'],
-                        'route' => $item['route_name']
+                        'route' => $route
                     ];
                 }
             }
@@ -353,6 +362,31 @@ class ZeusMenu
         }
 
         return $precedence;
+    }
+
+    public function reorder_menu($data)
+    {
+        $i = 0;
+        $i2 = 0;
+        if (!empty($data)) {
+            foreach ($data as $k => $v) {
+
+                if ($v == "null") {
+                    $i += 1;
+                    Menu::where('id',$k)->update([
+                        'precedence'=>$i,
+                        'zeus_menu_id'=>NULL
+                    ]);
+                } else {
+                    $i2 += 1;
+                    Menu::where('id', $k)->update([
+                        'precedence' => $i2,
+                        'zeus_menu_id' => $v
+                    ]);
+                }
+            }
+        }
+        return true;
     }
 
 }

@@ -62,7 +62,7 @@ $segment_3=isset($segment[1])?$segment[2]:"";
                     type: "post",
                     dataType: "json",
                     beforeSend: function() {
-                        $("#modaledit").modal('hide');
+                        modal_edit_hide();
                         overlay_show();
                     },
                 })
@@ -74,6 +74,7 @@ $segment_3=isset($segment[1])?$segment[2]:"";
                         alert(x.message);
                     }
                     overlay_hide();
+                    $('.modal-backdrop').remove();
                 })
                 .fail(function() {
                     alert('Server not respond');
