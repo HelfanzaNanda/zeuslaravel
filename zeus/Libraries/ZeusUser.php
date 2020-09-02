@@ -7,6 +7,7 @@ use Zeus\Libraries\ZeusUserGroup;
 use Zeus\Libraries\ZeusMessage;
 use Zeus\App\Models\User;
 use Session;
+use Illuminate\Support\Facades\Crypt;
 
 class ZeusUser
 {
@@ -177,14 +178,23 @@ class ZeusUser
             $edit->token            = md5(sha1(time().rand(1,100).$user_info->id));
             $edit->save();
 
+            $redirect_url="";
+            $redirect=Session::get('redirect');
+            if(!empty($redirect))
+            {
+                $redirect_url=url('/').'/'. $redirect;
+                Session::forget('redirect');
+            }
             return [
                 'status'=>true,
-                'message'=>'Login Valid'
+                'message'=>'Login Valid',
+                'redirect_url'=> $redirect_url
             ];
         }else{
             return [
                 'status' => false,
-                'message' => 'Password invalid'
+                'message' => 'Password invalid',
+                'redirect_url' => ''
             ];
         }
     }

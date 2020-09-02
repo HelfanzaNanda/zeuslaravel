@@ -141,7 +141,11 @@ $theme_url=url('assets/themes/adminlte3/').'/';
                     })
                     .done(function(x) {
                         if (x.status == true) {
-                            window.location = "{{ route('core.account.dashboard') }}";
+                            if (x.redirect_url != '') {
+                                window.location = x.redirect_url;
+                            } else {
+                                window.location = "{{ route('core.account.dashboard') }}";
+                            }
                         } else {
                             $("#error_response").html('<div class="alert alert-danger">' + x.message + '</div>');
                             $("#password").val("");

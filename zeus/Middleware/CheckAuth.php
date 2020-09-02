@@ -5,6 +5,7 @@ namespace Zeus\Middleware;
 use Closure;
 use Session;
 use Zeus\Libraries\ZeusUser;
+use Illuminate\Support\Facades\Crypt;
 
 class CheckAuth
 {
@@ -27,7 +28,16 @@ class CheckAuth
                 return redirect()->route('core.account.dashboard')->with('error', 'Not Authentication');
             }
         } else {
-            return redirect()->route('login')->with('error', 'You must login first!');
+            $prev_uri_segments = $request->segments();
+            $implode=implode("/",$prev_uri_segments);
+            if(empty($implode))
+            {
+                return redirect()->route('login')->with('error', 'You must login first!');
+            }else{
+                $encrypt = Crypt::encryptString($implode);
+                Session::put('redirect',$implode);
+                return redirect()->route('login', ['pipeline' => $encrypt])->with('error', 'You must login first!');
+            }
         }
     }
 }
