@@ -1,4 +1,4 @@
 @php
-$admin_template=config_read('admin_template');
+$admin_template=meta_read('backend_theme');
 @endphp
 @include('themes.'.$admin_template.'.login')
