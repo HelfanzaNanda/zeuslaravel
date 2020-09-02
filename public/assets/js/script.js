@@ -9,3 +9,18 @@ function overlay_hide() {
         $(".m-overlay").hide()
     }, 500)
 }
+
+function toast_show(title,message)
+{
+    iziToast.show({
+        title: title,
+        message: message,
+        theme: 'dark',
+        progressBarColor: '#d48d37',
+        icon: 'icon-chat_bubble',
+        position: 'topRight',
+        displayMode: 2,
+        timeout:2000,
+        progressBar:false
+    });
+}
