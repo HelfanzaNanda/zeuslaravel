@@ -26,7 +26,8 @@ class CreateZeusUserTable extends Migration
             $table->dateTime('last_login')->nullable();
             $table->string('forgot_token', 50)->nullable();
             $table->timestamp('forgot_valid')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->nullable()->useCurrent();
+            $table->timestamp('updated_at')->nullable()->useCurrent();
             $table->softDeletes();
         });
     }
