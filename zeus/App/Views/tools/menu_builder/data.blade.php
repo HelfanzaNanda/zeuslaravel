@@ -190,5 +190,11 @@
 
     function modal_edit_hide() {
         $("#modaledit").modal('hide');
+        $('.modal-backdrop').remove();
+    }
+
+    function modal_delete_hide() {
+        $("#modaldelete").modal('hide');
+        $('.modal-backdrop').remove();
     }
 </script>
