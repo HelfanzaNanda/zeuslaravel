@@ -1,8 +1,8 @@
 @push('assets')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous"></script>
+@php
+echo cdn_select2();
+@endphp
 @endpush
-
 <form method="post" id="frmupdate">
     @csrf
     <input type="hidden" name="id" value="{{ $data->id }}" />
@@ -106,7 +106,7 @@
                 .done(function(x) {
                     if (x.status == true) {
                         alert(x.message);
-                        window.location="{{ route('core.user.master') }}";
+                        window.location = "{{ route('core.user.master') }}";
                     } else {
                         alert(x.message);
                     }

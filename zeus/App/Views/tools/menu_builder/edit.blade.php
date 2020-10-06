@@ -29,23 +29,6 @@ $segment_3=isset($segment[1])?$segment[2]:"";
         <input type="text" name="route" id="route2" class="form-control" placeholder="Menu Route Name" value="{{ $data->route_name }}" />
     </div>
     <div class="form-group">
-        <label>User Group Access</label>
-        @foreach($access_menu as $g)
-        @php
-        $chk='';
-        if($g['chk']==1)
-        {
-        $chk='checked=""';
-        }
-        @endphp
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" name="group[]" <?= $chk; ?> value="{{ $g['id'] }}" /> {{ $g['meta_value'] }}
-            </label>
-        </div>
-        @endforeach
-    </div>
-    <div class="form-group">
         <label>&nbsp;</label>
         <button type="submit" class="btn btn-primary">Save</button>
     </div>

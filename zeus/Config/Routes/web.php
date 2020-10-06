@@ -42,6 +42,31 @@ Route::group(['middleware' => 'zeus.auth'], function () {
             route::post('logo/update', 'ConfigController@logo_update')->name('core.config.logo_update');
             route::get('company', 'ConfigController@company')->name('core.config.company');
             route::post('company/update', 'ConfigController@company_update')->name('core.config.company_update');
+            Route::prefix('module')->group(function () {
+                route::get('/', 'ModuleController@index')->name('core.config.module.index');
+                route::post('/store', 'ModuleController@store')->name('core.config.module.store');
+                route::post('/update', 'ModuleController@update')->name('core.config.module.update');
+                route::get('/edit/{id}', 'ModuleController@edit')->name('core.config.module.edit');
+                route::get('/delete/{id}', 'ModuleController@delete')->name('core.config.module.delete');
+            });
+            Route::prefix('module_sub')->group(function () {
+                route::get('/', 'ModuleSubController@index')->name('core.config.module_sub.index');
+                route::get('/datatables', 'ModuleSubController@datatables')->name('core.config.module_sub.datatables');
+                route::post('/store', 'ModuleSubController@store')->name('core.config.module_sub.store');
+                route::post('/update', 'ModuleSubController@update')->name('core.config.module_sub.update');
+                route::get('/edit/{id}', 'ModuleSubController@edit')->name('core.config.module_sub.edit');
+                route::get('/delete/{id}', 'ModuleSubController@delete')->name('core.config.module_sub.delete');
+            });
+            Route::prefix('module_access')->group(function () {
+                route::get('/', 'ModuleAccessController@index')->name('core.config.module_access.index');
+                route::post('/update', 'ModuleAccessController@update')->name('core.config.module_access.update');
+                route::get('/get_access', 'ModuleAccessController@get_access')->name('core.config.module_access.get_access');
+            });
+            Route::prefix('menu_access')->group(function () {
+                route::get('/', 'MenuAccessController@index')->name('core.config.menu_access.index');
+                route::post('/update', 'MenuAccessController@update')->name('core.config.menu_access.update');
+                route::get('/get_access', 'MenuAccessController@get_access')->name('core.config.menu_access.get_access');
+            });
         });
         Route::prefix('tools')->group(function () {
             Route::prefix('send_email')->group(function () {

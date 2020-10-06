@@ -6,6 +6,8 @@ use Zeus\Libraries\ZeusSecurity;
 use Zeus\Libraries\ZeusUserGroup;
 use Zeus\Libraries\ZeusMessage;
 use Zeus\App\Models\User;
+use Zeus\App\Models\ModuleAccess;
+use Zeus\App\Models\ModuleSub;
 use Session;
 use Illuminate\Support\Facades\Crypt;
 
@@ -428,19 +430,37 @@ class ZeusUser
         {
             $next=true;
         }else{
-            $allowed_all=array('core.account.dashboard', 'core.account.profile', 'core.account.profile.update', 'core.account.avatar.update', 'core.account.signout');
+            $allowed_all = array('core.account.dashboard', 'core.account.profile', 'core.account.profile.update', 'core.account.avatar.update', 'core.account.signout');
             if (in_array($route_name,$allowed_all)) {
                 $next = true;
             }else{
-                $route_name_access = $zeus_group->zeus_user_group_access($info->meta_key);
-                if (!empty($route_name_access)) {
-                    if (isset($route_name_access[$route_name])) {
-                        if ($route_name_access[$route_name] == 'on') {
-                            $next = true;
-                        }
+                $check_rules = ModuleSub::where('route_name', $route_name)->count();
+                if ($check_rules) {
+                    $check_if_exists = ModuleAccess::where('zeus_module_access.user_group_id', $user_group_id)
+                        ->where('zeus_module_sub.route_name', $route_name)
+                        ->join('zeus_module_sub', 'zeus_module_access.zeus_module_sub_id', 'zeus_module_sub.id')
+                        ->count();
+                    if ($check_if_exists) {
+                        $next = true;
                     }
                 }
             }
+            
+            
+
+            // $allowed_all=array('core.account.dashboard', 'core.account.profile', 'core.account.profile.update', 'core.account.avatar.update', 'core.account.signout');
+            // if (in_array($route_name,$allowed_all)) {
+            //     $next = true;
+            // }else{
+            //     $route_name_access = $zeus_group->zeus_user_group_access($info->meta_key);
+            //     if (!empty($route_name_access)) {
+            //         if (isset($route_name_access[$route_name])) {
+            //             if ($route_name_access[$route_name] == 'on') {
+            //                 $next = true;
+            //             }
+            //         }
+            //     }
+            // }
             
         }
         return $next;

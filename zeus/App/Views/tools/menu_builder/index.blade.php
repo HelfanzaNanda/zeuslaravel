@@ -1,9 +1,11 @@
 @push('assets')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"></script>
+@php
+echo cdn_select2();
+echo cdn_jqueryui();
+@endphp
 <script src="{{ asset('/assets/js/sortable.js') }}"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous"></script>
 @endpush
+
 <div class="row">
     <div class="col-md-5">
         <div class="card">
@@ -29,24 +31,12 @@
                     </div>
                     <div class="form-group">
                         <label>Icon</label>
-                        <input type="text" name="icon" class="form-control " placeholder="Menu Icon" required value="far fa-circle" />
+                        <input type="text" name="icon" class="form-control " placeholder="Menu Icon" required value="fa fa-circle" />
                     </div>
 
                     <div class="form-group">
                         <label>Route Name</label>
                         <input type="text" name="route" id="route" class="form-control input-add" placeholder="Menu Route Name" value="" />
-                    </div>
-                    <div class="form-group">
-                        <label>User Group Access</label>
-                        @foreach($group as $g)
-                        @if($g->meta_key != 'superadmin')
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="group[]" value="{{ $g->id}}" /> {{ $g->meta_value }}
-                            </label>
-                        </div>
-                        @endif
-                        @endforeach
                     </div>
                     <div class="form-group">
                         <label>&nbsp;</label>
@@ -113,6 +103,7 @@
                 data: function(params) {
                     return {
                         q: params.term,
+                        menu_admin: $("#menu_admin").is(':checked')
                     };
                 },
                 processResults: function(data, params) {

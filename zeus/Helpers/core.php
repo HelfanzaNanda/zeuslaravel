@@ -146,3 +146,11 @@ if (!function_exists('zeus_menu')) {
         return $menu->zeus_group_array();
     }
 }
+
+if (!function_exists('check_route_access')) {
+    function check_route_access($route_name)
+    {
+        $user = new ZeusUser();
+        return $user->check_access_route($route_name);
+    }
+}

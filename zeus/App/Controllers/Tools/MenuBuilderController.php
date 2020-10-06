@@ -70,7 +70,7 @@ class MenuBuilderController extends ZeusController
         if($request->ajax())
         {
             $menu = new ZeusMenu();
-            $data=$menu->menu_parent($request->q,false);
+            $data=$menu->menu_parent($request->q,$request->menu_admin);
             return response()->json($data);
         }else{
             die('Not ajax request');
@@ -119,8 +119,9 @@ class MenuBuilderController extends ZeusController
             $count_child = $menu->menu_has_child($request->id);
             $group_lib = new ZeusUserGroup();
             $group = $group_lib->groups();
-            $access_menu=$menu->access_menu($request->id);
+            // $access_menu=$menu->access_menu($request->id);
             // dd($access_menu);
+            $access_menu=array();
             $view = view('zeus::tools.menu_builder.edit', compact('data', 'count_child', 'group', 'parent_name', 'access_menu'));
             echo $view->render();
         } else {
