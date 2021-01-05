@@ -29,11 +29,11 @@ class ExampleController extends Controller
 
         // Optional Data Header
 
-        return zeus_view('example',[
+        return view('example',[
             'title'=>'Example Title',
             'breadcrumb'=>$breadcumb,
             'keyword'=>'This is Keyword'
-        ],compact('data'));
+        ],compact('data'),[],false);
     }
 
 }
